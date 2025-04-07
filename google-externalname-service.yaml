@@ -1,0 +1,9 @@
+# Filename: google-externalname-service.yaml
+
+apiVersion: v1                    # Kubernetes API version
+kind: Service                     # This is a Service resource
+metadata:
+  name: google-service            # Name of the Service
+spec:
+  type: ExternalName              # Service type that maps to an external DNS name
+  externalName: google.com        # External domain name to forward requests to
