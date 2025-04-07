@@ -1,0 +1,15 @@
+# Filename: jenkins-service.yaml
+
+apiVersion: v1                # Kubernetes API version
+kind: Service                 # This is a Service resource
+metadata:
+  name: jenkins-nodeport      # Name of the Service
+spec:
+  type: NodePort              # Exposes the Service on a static port on each Node
+  selector:
+    my-pod: my-jenkins        # Matches Pods with this label (links to the jenkins Pod)
+  ports:
+    - protocol: TCP           # Protocol used (TCP in this case)
+      port: 8080              # Port exposed by the Service
+      targetPort: 8080        # Port on the Pod to forward traffic to
+      nodePort: 30008         # External port on the Node to access the Service
