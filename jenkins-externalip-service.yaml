@@ -1,0 +1,16 @@
+# Filename: jenkins-externalip-service.yaml
+
+apiVersion: v1                       # Kubernetes API version
+kind: Service                        # This is a Service resource
+metadata:
+  name: jenkins-ext-ip              # Name of the Service
+spec:
+  selector:
+    my-pod: my-jenkins              # Selects the Pod(s) with this label
+  ports:
+    - name: http                    # Optional name for the port (useful for reference)
+      protocol: TCP                 # Protocol used
+      port: 8082                    # Port exposed by the Service (external access)
+      targetPort: 8080              # Port on the Pod the traffic is sent to
+  externalIPs:
+    - 172.31.12.83                  # IP address (from your network) that routes to this Service
