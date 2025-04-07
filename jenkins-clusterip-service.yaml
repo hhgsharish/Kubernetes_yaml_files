@@ -1,0 +1,13 @@
+# Filename: jenkins-clusterip-service.yaml
+
+apiVersion: v1                 # Kubernetes API version
+kind: Service                  # This is a Service resource
+metadata:
+  name: my-service             # Name of the Service
+spec:
+  selector:
+    my-pod: my-jenkins         # Selects the Pod(s) with this label
+  ports:
+    - protocol: TCP            # Network protocol used
+      port: 8080               # Port exposed by the Service (inside the cluster)
+      targetPort: 8080         # Port on the Pod the traffic is sent to
