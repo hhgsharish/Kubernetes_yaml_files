@@ -1,0 +1,28 @@
+# Filename: jenkins-pod-loadbalancer.yaml
+
+# ------------------ Jenkins Pod ------------------
+apiVersion: v1                       # Kubernetes API version
+kind: Pod                            # This is a Pod resource
+metadata:
+  name: jenkins1                     # Name of the Pod
+  labels:
+    my-pod: my-jenkins               # Label to identify the Pod (used by Service selector)
+spec:
+  containers:
+    - name: jenkins1                 # Name of the container inside the Pod
+      image: jenkins/jenkins:latest # Jenkins Docker image (latest version)
+
+# ------------------ LoadBalancer Service ------------------
+---
+apiVersion: v1                       # Kubernetes API version
+kind: Service                        # This is a Service resource
+metadata:
+  name: jenkins-loadbalancer         # Name of the Service
+spec:
+  type: LoadBalancer                 # Exposes the Service externally using a cloud provider's load balancer
+  selector:
+    my-pod: my-jenkins               # Matches the label on the Pod to route traffic
+  ports:
+    - protocol: TCP                  # Network protocol
+      port: 8080                     # Port exposed by the Service (for external access)
+      targetPort: 8080              # Port on the Pod/container Jenkins is running on
