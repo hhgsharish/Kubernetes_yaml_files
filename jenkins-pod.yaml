@@ -1,0 +1,12 @@
+# Filename: jenkins-pod.yaml
+
+apiVersion: v1                  # Kubernetes API version
+kind: Pod                       # This is a Pod resource
+metadata:
+  name: jenkins1                # Name of the Pod
+  labels:
+    my-pod: my-jenkins          # Label to identify the Pod
+spec:
+  containers:
+    - name: jenkins1            # Name of the container inside the Pod
+      image: jenkins/jenkins:latest  # Jenkins Docker image (latest version)
