@@ -1,0 +1,38 @@
+# File: jenkins-deployment.yaml
+# Description: Kubernetes Deployment file to run 4 Jenkins pods with a rolling update strategy
+
+apiVersion: apps/v1                 # Kubernetes API version for Deployment
+kind: Deployment                    # We're creating a Deployment
+
+metadata:
+  name: jenkins-replicaset          # Name of the Deployment
+  labels:
+    app: jenkins-set                # Label to identify this deployment
+
+spec:
+  replicas: 4                       # Run 4 copies (pods) of the Jenkins application
+
+  # Deployment update strategy
+  strategy:
+    type: RollingUpdate             # Update pods one by one without downtime
+    rollingUpdate:
+      maxSurge: 2                   # Max 2 extra pods allowed during update
+      maxUnavailable: 1            # Only 1 pod can be down at a time during update
+
+  # This Deployment will manage pods with the following label
+  selector:
+    matchLabels:
+      app: jenkins-set              # Match pods with this label
+
+  # Template for the pods that this deployment will create
+  template:
+    metadata:
+      labels:
+        app: jenkins-set            # Pod will have this label
+
+    spec:
+      containers:
+        - name: jenkins             # Name of the container inside the pod
+          image: jenkins/jenkins:kedhar123   # Custom Jenkins Docker image with specific tag
+          ports:
+            - containerPort: 8080   # Container will listen on port 8080 (default for Jenkins)
