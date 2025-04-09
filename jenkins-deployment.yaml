@@ -5,7 +5,7 @@ apiVersion: apps/v1                 # Kubernetes API version for Deployment
 kind: Deployment                    # We're creating a Deployment
 
 metadata:
-  name: jenkins-replicaset          # Name of the Deployment
+  name: jenkins-deployment          # Name of the Deployment
   labels:
     app: jenkins-set                # Label to identify this deployment
 
