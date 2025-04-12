@@ -33,6 +33,6 @@ spec:
     spec:
       containers:
         - name: jenkins             # Name of the container inside the pod
-          image: jenkins/jenkins:kedhar123   # Custom Jenkins Docker image with specific tag
+          image: jenkins/jenkins:latest   # Custom Jenkins Docker image with specific tag
           ports:
             - containerPort: 8080   # Container will listen on port 8080 (default for Jenkins)
