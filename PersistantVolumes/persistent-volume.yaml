@@ -1,0 +1,21 @@
+apiVersion: v1                         # API version for this resource
+kind: PersistentVolume                 # Resource type: PersistentVolume
+metadata:
+  name: local-pv                       # Name of the PersistentVolume
+spec:
+  capacity:
+    storage: 1Gi                       # Storage capacity of this volume
+  accessModes:
+    - ReadWriteOnce                    # RWO means volume can be mounted as read-write by a single node
+  persistentVolumeReclaimPolicy: Retain # What happens to PV when PVC is deleted (Retain keeps data)
+  storageClassName: manual             # Storage class name for matching with PVCs
+  hostPath:
+    path: /mnt/data                    # Path on the host node's filesystem to be used for storage
+  nodeAffinity:                        # Constraints for which nodes this PV can be used on
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: env                 # The node label key to match
+              operator: In             # Match if the node's label value is in the following values
+              values:
+                - dev                  # The node must have label env=dev
