@@ -1,0 +1,11 @@
+apiVersion: v1                         # API version for this resource
+kind: PersistentVolumeClaim            # Resource type: PersistentVolumeClaim
+metadata:
+  name: jenkins-pvc                    # Name of the PVC
+spec:
+  accessModes:
+    - ReadWriteOnce                    # RWO means volume can be mounted as read-write by a single node
+  resources:
+    requests:
+      storage: 1Gi                     # Amount of storage requested by this claim
+  storageClassName: manual             # Storage class name to match with available PVs
