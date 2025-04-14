@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+  namespace: my-jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      volumes:
+        - name: jenkins-storage
+          hostPath:
+            path: /home/ubuntu/jenkins-data #need to create this dir inside worker nodes and give 777 permission
+            type: DirectoryOrCreate
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:lts
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: jenkins-storage
+              mountPath: /var/jenkins_home
