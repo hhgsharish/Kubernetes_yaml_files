@@ -1,0 +1,37 @@
+apiVersion: apps/v1                    # API version for Deployment resources
+kind: Deployment                       # Resource type: Deployment
+metadata:
+  name: jenkins-deploy                 # Name of the deployment
+  labels:
+    app: jenkins-set                   # Label applied to the deployment itself
+spec:
+  replicas: 1                          # Single replica since Jenkins typically runs as a singleton
+  selector:
+    matchLabels:
+      app: jenkins-set                 # Selects which pods are managed by this deployment
+  template:
+    metadata:
+      labels:
+        app: jenkins-set               # Labels applied to the pods created by this template
+    spec:
+      volumes:
+        - name: jenkins-data           # Name of the volume, referenced by volumeMounts
+          persistentVolumeClaim:
+            claimName: jenkins-pvc     # Name of the PVC to use for this volume
+      containers:
+        - name: jenkins                # Container name
+          image: jenkins/jenkins:latest # Container image to use
+          ports:
+            - containerPort: 8080      # Port that Jenkins exposes inside the container
+          volumeMounts:
+            - name: jenkins-data       # Name of the volume to mount (must match volume name above)
+              mountPath: /var/jenkins_home # Where to mount the volume in the container
+          securityContext:
+            runAsUser: 0
+          resources:                   # Resource requests and limits for the container
+            requests:
+              memory: "1Gi"            # Memory request
+              cpu: "500m"              # CPU request (500 millicores = 0.5 CPU)
+            limits:
+              memory: "2Gi"            # Memory limit
+              cpu: "1"                 # CPU limit (1 CPU)
