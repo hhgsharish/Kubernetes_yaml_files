@@ -1,11 +1,11 @@
-apiVersion: storage.k8s.io/v1          # API version for StorageClass resources
-kind: StorageClass                     # Resource type: StorageClass
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
 metadata:
-  name: standard                       # Name of the StorageClass
-provisioner: kubernetes.io/aws-ebs     # The volume plugin that will provision volumes (this example uses AWS EBS)
-parameters:                            # Parameters passed to the provisioner
-  type: gp2                            # Type of EBS volume (General Purpose SSD)
-  fsType: ext4                         # File system type to be created
-reclaimPolicy: Delete                  # What happens to the volume when PVC is deleted (Delete removes the volume)
-volumeBindingMode: WaitForFirstConsumer # Don't provision volume until pod using the PVC is created
-allowVolumeExpansion: true             # Allow volumes to be expanded later
+  name: standard
+provisioner: ebs.csi.aws.com
+parameters:
+  type: gp2
+  fsType: ext4
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
