@@ -1,7 +1,9 @@
 
 # Step 1: Label your node (Pre-requisite)
 Before applying your PersistentVolume, you need to ensure your node has the required label that matches your nodeAffinity selector.
+
     kubectl label nodes <your-node-name> env=dev
+    
 Why this step is needed: Your PersistentVolume specifies nodeAffinity that requires nodes with the label env=dev. Without this label, the PV won't be schedulable on any node.
 # Step 2: Create the directory on your node
 You need to create the directory that will be used for the hostPath volume:
